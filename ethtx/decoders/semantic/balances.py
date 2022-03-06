@@ -10,18 +10,21 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+from inspect import Parameter
 from typing import List
 
-from ethtx.models.decoded_model import DecodedBalance, DecodedTransactionMetadata
+from ethtx.models.decoded_model import DecodedBalance, DecodedTransactionMetadata, DecodedEvent, AddressInfo
 from .abc import SemanticSubmoduleAbc
 from .helpers.utils import get_badge
+
+from .specials.handler import update_missing_balances
 
 
 class SemanticBalancesDecoder(SemanticSubmoduleAbc):
     """Semantic Balances Decoder."""
 
     def decode(
-        self, balances: List[DecodedBalance], tx_metadata: DecodedTransactionMetadata
+        self, balances: List[DecodedBalance], tx_metadata: DecodedTransactionMetadata, tx_events: List[DecodedEvent]
     ) -> List[DecodedBalance]:
         """Semantically decode balances."""
 
@@ -36,5 +39,8 @@ class SemanticBalancesDecoder(SemanticSubmoduleAbc):
 
             for token in balance.tokens:
                 token["balance"] = f"{token['balance']:,.4f}"
+
+        # handle missing balances for nfts
+        balances: List[DecodedBalance] = update_missing_balances(tx_events, balances)
 
         return balances

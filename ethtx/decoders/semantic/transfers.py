@@ -12,14 +12,16 @@
 
 from typing import List
 
-from ethtx.models.decoded_model import DecodedTransfer, DecodedTransactionMetadata
+from ethtx.models.decoded_model import DecodedTransfer, DecodedTransactionMetadata, DecodedEvent, AddressInfo
 from .abc import SemanticSubmoduleAbc
 from .helpers.utils import get_badge
+
+from .specials.handler import update_missing_transfers
 
 
 class SemanticTransfersDecoder(SemanticSubmoduleAbc):
     def decode(
-        self, transfers: List[DecodedTransfer], tx_metadata: DecodedTransactionMetadata
+        self, transfers: List[DecodedTransfer], tx_metadata: DecodedTransactionMetadata, tx_events: List[DecodedEvent]
     ) -> List[DecodedTransfer]:
         for transfer in transfers:
             # decode proper from and to addresses badges
@@ -36,5 +38,8 @@ class SemanticTransfersDecoder(SemanticSubmoduleAbc):
 
             # format the transfer value
             transfer.value = f"{transfer.value:,.4f}"
+
+        # handle missing transfers for nfts
+        transfers: List[DecodedTransfer] = update_missing_transfers(tx_events, transfers)
 
         return transfers
