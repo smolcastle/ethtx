@@ -10,7 +10,6 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-from inspect import Parameter
 from typing import List
 
 from ethtx.models.decoded_model import DecodedBalance, DecodedTransactionMetadata, DecodedEvent, AddressInfo
