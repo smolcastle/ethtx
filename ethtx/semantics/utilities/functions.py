@@ -23,11 +23,8 @@ def token_decimals(transaction, repository, address):
 
 
 def decode_nft(contract, token_id):
-    if len(str(token_id)) > 8:
-        token_symbol = f"NFT {str(token_id)[:6]}...{str(token_id)[-2:]}"
-    else:
-        token_symbol = f"NFT {token_id}"
-
+    
+    token_symbol = f"{token_id}"
     token_address = f"{contract}?a={token_id}#inventory"
 
     return dict(address=token_address, name=token_symbol)
