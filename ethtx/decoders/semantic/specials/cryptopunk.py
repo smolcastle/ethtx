@@ -38,7 +38,7 @@ def handle_balances(event: DecodedEvent, events: List[DecodedEvent], balances: L
             balances[balances.index(balance)].tokens.append(
                 {
                     "token_address": nfts["cryptopunk"] + "?a=%i" % punkIndex + "#inventory",
-                    "token_symbol": "NFT %i" % punkIndex,
+                    "token_symbol": "%i" % punkIndex,
                     "token_standard": "ERC721",
                     "balance": "-1.0000",
                 }
@@ -48,7 +48,7 @@ def handle_balances(event: DecodedEvent, events: List[DecodedEvent], balances: L
             balances[balances.index(balance)].tokens.append(
                 {
                     "token_address": nfts["cryptopunk"] + "?a=%i" % punkIndex + "#inventory",
-                    "token_symbol": "NFT %i" % punkIndex,
+                    "token_symbol": "%i" % punkIndex,
                     "token_standard": "ERC721",
                     "balance": "1.0000",
                 }
@@ -68,7 +68,7 @@ def handle_balances(event: DecodedEvent, events: List[DecodedEvent], balances: L
                     tokens=[
                         {
                             "token_address": nfts["cryptopunk"] + "?a= %i" % punkIndex + "#inventory",
-                            "token_symbol": "NFT %i" % punkIndex,
+                            "token_symbol": "%i" % punkIndex,
                             "token_standard": "ERC721",
                             "balance": "-1.0000",
                         }
@@ -86,7 +86,7 @@ def handle_balances(event: DecodedEvent, events: List[DecodedEvent], balances: L
                     tokens=[
                         {
                             "token_address": nfts["cryptopunk"] + "?a=%i" % punkIndex + "#inventory",
-                            "token_symbol": "NFT %i" % punkIndex,
+                            "token_symbol": "%i" % punkIndex,
                             "token_standard": "ERC721",
                             "balance": "1.0000",
                         }
@@ -124,7 +124,7 @@ def handle_transfers(event: DecodedEvent, events: List[DecodedEvent], transfers:
                 badge=None
             ),
             token_address=nfts['cryptopunk'] + "?a=%i" % punkIndex + "#inventory",
-            token_symbol="NFT %i" % punkIndex,
+            token_symbol="%i" % punkIndex,
             token_standard="ERC721",
             value="1.0000",
         )
