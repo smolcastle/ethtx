@@ -105,10 +105,19 @@ class ABITransfersDecoder(ABISubmoduleAbc):
 
             elif event.event_name == "TransferSingle":
                 from_address = event.parameters[1].value
+
+                # to handle https://ethtx.info/mainnet/0xde0c13a29318576876945ec4eca4e0711b59aedf389f94d1223d5ad3db3b7d0a/
+                if len(from_address) != 42:
+                    from_address = "0x" + from_address[-40:]
+                    print(from_address)
+
                 from_name = self._repository.get_address_label(
                     event.chain_id, from_address, proxies
                 )
                 to_address = event.parameters[2].value
+                if len(to_address) != 42:
+                    to_address = "0x" + to_address[-40:]
+                    print(to_address)
                 to_name = self._repository.get_address_label(
                     event.chain_id, to_address, proxies
                 )
@@ -134,10 +143,16 @@ class ABITransfersDecoder(ABISubmoduleAbc):
 
             elif event.event_name == "TransferBatch":
                 from_address = event.parameters[1].value
+                if len(from_address) != 42:
+                    from_address = "0x" + from_address[-20:]
+                    print(from_address)
                 from_name = self._repository.get_address_label(
                     event.chain_id, from_address, proxies
                 )
                 to_address = event.parameters[2].value
+                if len(to_address) != 42:
+                    to_address = "0x" + to_address[-40:]
+                    print(to_address)
                 to_name = self._repository.get_address_label(
                     event.chain_id, to_address, proxies
                 )

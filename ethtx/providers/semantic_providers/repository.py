@@ -113,7 +113,6 @@ class SemanticsRepository:
                 standard, standard_semantics = self._decode_standard_semantics(
                     address, raw_semantics["name"], events, functions
                 )
-                print(f"{address}: {standard} In create address semantics")
                 if standard == "ERC20":
                     erc20_semantics = standard_semantics
                 else:
