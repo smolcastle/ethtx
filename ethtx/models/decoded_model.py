@@ -112,3 +112,4 @@ class Proxy(BaseModel):
     type: str
     semantics: Optional[List[AddressSemantics]]
     token: Optional[ERC20Semantics]
+    implementation_address: Optional[str]

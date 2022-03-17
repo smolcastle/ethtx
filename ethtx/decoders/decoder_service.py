@@ -94,13 +94,16 @@ class DecoderService:
                 chain_id, delegator
             )
 
+            implementation_address = None
             if is_eip1969_proxy(chain, delegator, delegations[delegator][0]):
                 proxy_type = "EIP1969Proxy"
                 fallback_name = "EIP1969_Proxy"
+                implementation_address = delegations[delegator][0]
 
             elif is_eip1969_beacon_proxy(chain, delegator, delegations[delegator][0]):
                 proxy_type = "EIP1969Beacon"
                 fallback_name = "EIP1969_BeaconProxy"
+                implementation_address = delegations[delegator][0]
 
             else:
                 proxy_type = "GenericProxy"
@@ -126,6 +129,7 @@ class DecoderService:
                 type=proxy_type,
                 semantics=[semantics for semantics in delegates_semantics if semantics],
                 token=token_semantics,
+                implementation_address=implementation_address if implementation_address else None,
             )
 
         return proxies
