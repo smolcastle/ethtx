@@ -61,7 +61,7 @@ class ABITransfersDecoder(ABISubmoduleAbc):
                 )
 
                 address_for_standard = event.contract.address
-                if address_for_standard in proxies and proxies[address_for_standard].type == "EIP1969Proxy":
+                if address_for_standard in proxies and proxies[address_for_standard].type in ["EIP1969Proxy", "EIP1969Beacon"]:
                     address_for_standard = proxies[address_for_standard].implementation_address
 
                 standard = self._repository.get_standard(

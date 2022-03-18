@@ -35,6 +35,19 @@ def is_eip1969_beacon_proxy(chain, delegator, delegate):
                             ],
                             "stateMutability": "view",
                             "type": "function"
+                        },
+                        {
+                            "inputs": [],
+                            "name": "childImplementation",
+                            "outputs": [
+                                {
+                                    "internalType": "address",
+                                    "name": "",
+                                    "type": "address"
+                                }
+                            ],
+                            "stateMutability": "view",
+                            "type": "function"
                         }
                     ]"""
 
@@ -49,7 +62,13 @@ def is_eip1969_beacon_proxy(chain, delegator, delegate):
         beacon = chain.eth.contract(
             address=Web3.toChecksumAddress(beacon), abi=ibeacon_abi
         )
-        implementation = beacon.functions.implementation().call()
+        try:
+            implementation = beacon.functions.implementation().call()
+        except:
+            # https://etherscan.io/address/0xd89b16331f39ab3878daf395052851d3ac8cf3cd/advanced#code
+            # NFTX vaults use Beacon proxy but they call `childImplementation()` instead of `implementation()`
+            # for the implementation address.
+            implementation = beacon.functions.childImplementation().call()
         return implementation == Web3.toChecksumAddress(delegate)
     except:
         return False
